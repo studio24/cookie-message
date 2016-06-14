@@ -9,15 +9,16 @@
         }
         body {
             margin: 0;
+            font-family: sans-serif;
+        }
+        #content {
+            margin: 1em;
         }
         #cookie-message {
             background-color: #d5e6ed;
             color: #662d91;
             margin: 0 auto;
             padding: 1em;
-        }
-        h1, p {
-            margin: 1em;
         }
     </style>
 </head>
@@ -27,17 +28,22 @@
     document.body.className = document.body.className + " js_enabled";
 </script>
 
-<div id="cookie-message" data-cookie-expiry="365">
+<div id="cookie-message" data-cookie-expiry="60">
     <p>
         [Site name] uses cookies to ensure we give you the best experience on our website.
-        <a href="/privacy-policy" title="View our Cookie Policy">Find out more about cookies</a>
+        <a href="cookie-policy.html" title="View our Cookie Policy">Find out more about cookies</a>
     </p>
 </div>
+
+<div id="content">
 
 <h1>My page</h1>
 
 <p>Some content here. Refresh and the cookie message will disappear.</p>
 
+<p><a href="cookie-policy.html" title="View our Cookie Policy">Find out more about cookies</a></p>
+
+</div>
 <script src="cookie-message.js"></script>
 
 </body>

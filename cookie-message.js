@@ -41,15 +41,16 @@
     }
     var cookie = readCookie('seen-cookie-message');
     if (cookie != null && cookie == 'yes') {
-        //gcookieMessage.style.display = 'none';
-
+        cookieMessage.style.display = 'none';
     } else {
         cookieMessage.style.display = 'block';
-        var cookieExpiry = cookieMessage.getAttribute('data-cookie-expiry');
-        if (cookieExpiry == null) {
-            cookieExpiry = 30;
-        }
-        createCookie('seen-cookie-message','yes',cookieExpiry);
     }
+    
+    // Set/update cookie
+    var cookieExpiry = cookieMessage.getAttribute('data-cookie-expiry');
+    if (cookieExpiry == null) {
+        cookieExpiry = 30;
+    }
+    createCookie('seen-cookie-message','yes',cookieExpiry);
 
 })();
