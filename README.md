@@ -42,6 +42,23 @@ Load this JavaScript at the bottom of the page:
 <script src="cookie-message.js"></script>
 ```
 
+### Changing the cookie path
+
+By default the cookie to hide the message is set across the entire current domain. If you want to set the cookie on a sub-folder 
+path of a domain only, for example if you have a set of sub-sites you want the cookie warning to appear for, then you can 
+set the cookie path via the `data-cookie-path` attribute. 
+
+```html
+<div id="cookie-message" data-cookie-path="/my-site">
+    ...
+</div>
+``` 
+
+Please note if you set a cookie warning on both the domain root and a sub-path, the cookie saved to the domain root will stop
+the cookie message displaying on sub-path pages.
+
+### Extending cookie lifetime
+
 By default the cookie message is displayed once, a cookie is then set to hide it for 30 days. If the user does not visit 
 the site again in over 30 days then they will see the cookie message once more the next time they visit. Each time the user 
 visits the site the cookie is updated and the 30 day expiry reset.

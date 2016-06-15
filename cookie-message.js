@@ -6,16 +6,17 @@
      * @param string name
      * @param string value
      * @param int days
+     * @param string path
      * @see http://www.quirksmode.org/js/cookies.html
      */
-    function createCookie(name,value,days) {
+    function createCookie(name,value,days,path) {
         if (days) {
             var date = new Date();
             date.setTime(date.getTime()+(days*24*60*60*1000));
             var expires = "; expires="+date.toGMTString();
         }
         else var expires = "";
-        document.cookie = name+"="+value+expires+"; path=/";
+        document.cookie = name+"="+value+expires+"; path="+path;
     }
 
     /**
@@ -51,6 +52,10 @@
     if (cookieExpiry == null) {
         cookieExpiry = 30;
     }
-    createCookie('seen-cookie-message','yes',cookieExpiry);
+    var cookiePath = cookieMessage.getAttribute('data-cookie-path');
+    if (cookiePath == null) {
+        cookiePath = "/";
+    }
+    createCookie('seen-cookie-message','yes',cookieExpiry,cookiePath);
 
 })();
