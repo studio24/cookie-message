@@ -3,21 +3,21 @@
 A simple snippet of HTML and JavaScript to manage the cookie message that is required by EU Cookie Law. This is inspired
 by the GOV.UK site that simply displays a message and then hides it on the next page request.
 
-From guidance by the Information Commissioner's Office (ICO) implied consent is OK for things like Google Analytics. Quite 
+The Information Commissioner's Office (ICO) state that implied consent is OK for things like Google Analytics. Quite 
 honestly they wouldn't work without them! The main requirement is for UK websites to display clear information about cookies to their users, 
 which is a good idea in any case.
 
 ## What you need to do
 
 We recommend the minimum requirement is to have a Cookie Policy clearly explaining your usage of cookies. You can see an example
-of a cookie policy in the file `cookie-policy.html`
+of a cookie policy in the file [cookie-policy.html](cookie-policy.html)
 
 Optionally, you can also have a cookie message displaying at the top of your website. 
 
 ## Usage
 
 Add the cookie message HTML at the top of your page. You can add whatever message you like and include a link to your 
-cookie or privacy policy. There's no need to have any close link.
+cookie or privacy policy. There's no close link.
 
 ```html
 <div id="cookie-message">
@@ -36,7 +36,7 @@ a flash of content as the cookie message appears and then is hidden after the DO
 }
 ```
 
-Load this JavaScript at the bottom of the page:
+Load this JavaScript at the bottom of the page to hide the cookie message after the first view (yes, this sets a cookie to hide the cookie message).
 
 ```html
 <script src="cookie-message.js"></script>
@@ -45,7 +45,7 @@ Load this JavaScript at the bottom of the page:
 ### Changing the cookie path
 
 By default the cookie to hide the message is set across the entire current domain. If you want to set the cookie on a sub-folder 
-path of a domain only, for example if you have a set of sub-sites you want the cookie warning to appear for, then you can 
+path only, for example if you have a set of sub-sites and you want the cookie warning to appear for each one, then you can 
 set the cookie path via the `data-cookie-path` attribute. 
 
 ```html
@@ -75,4 +75,12 @@ You can extend the cookie lifetime via the `data-cookie-expiry` data attribute, 
 
 We wrote an article on the [Cookie Law](http://www.studio24.net/blog/clarification-on-cookie-law/) which you can read on our website.
 
-You can also find out more from the [Information Commissioner's Office](https://ico.org.uk/for-organisations/guide-to-pecr/cookies-and-similar-technologies/). 
+You can also find out more from the [Information Commissioner's Office](https://ico.org.uk/for-organisations/guide-to-pecr/cookies-and-similar-technologies/).
+ 
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+## Credits
+
+- [Simon R Jones](https://github.com/simonrjones)
