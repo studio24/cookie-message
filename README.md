@@ -27,6 +27,15 @@ cookie or privacy policy. There's no close link.
 </div>
 ```
 
+Add this JavaScript after the body tag to instantly apply the js_enabled class. This ensures the cookie message is hidden without a flash of content.
+
+```html
+<script>
+    // Detect JS support
+    document.body.className = document.body.className + " js_enabled";
+</script>
+```
+
 You need this CSS to ensure the cookie message is initially hidden if JavaScript is supported. Without this there will be 
 a flash of content as the cookie message appears and then is hidden after the DOM has loaded.
 
