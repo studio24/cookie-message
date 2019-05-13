@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test page</title>
+    <style>
+        /* Required CSS style for the cookie message banner */
+        .js_enabled #cookie-message {
+            display: none;
+        }
+
+        /* Following styles are for the demo page */
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+        #content {
+            margin: 1em;
+        }
+        #cookie-message {
+            background-color: #d5e6ed;
+            color: #662d91;
+            margin: 0 auto;
+            padding: 1em;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table thead tr {
+            border-bottom: 1px solid #444;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #777;
+        }
+
+        table tbody tr:nth-last-child(1) {
+            border: none;
+        }
+
+        table thead th {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        table th:nth-child(1) {
+            min-width: 7rem;
+        }
+
+        table th {
+            padding: 0.8rem 0.8rem 0.4rem 0;
+            vertical-align: top;
+        }
+
+        table td {
+            padding: 0.8rem 0.8rem 0.8rem 0;
+            vertical-align: top;
+        }
+
+        table + h3 {
+            margin-top: 1.25rem;
+        }
+
+    </style>
+</head>
+<body>
+<script>
+    // Detect JS support
+    document.body.className = document.body.className + " js_enabled";
+</script>
+
+<div id="cookie-message" data-cookie-expiry="60">
+    <p>
+        [Site name] uses cookies to ensure we give you the best experience on our website.
+        <a href="cookie-policy.html" title="View our Cookie Policy">Find out more about cookies</a>
+    </p>
+</div>
+
+<div id="content">
+
+    <h1>Test page</h1>
+
+    <p>This is a page to test the cookie banner. Refresh the page and the cookie message should disappear for 60 days.</p>
+
+</div>
+<script async src="cookie-message.js"></script>
+
+</body>
+</html>

@@ -1,61 +1,106 @@
 (function() {
 
+    var storageNamespace = 'CookieMessage__';
+    var seenStorageKey = storageNamespace + 'seen_message';
+    var expiryStorageKey = storageNamespace + 'expiry';
+
     /**
-     * Set cookie
+     * Test whether local storage is available
      *
-     * @param string name
-     * @param string value
-     * @param int days
-     * @param string path
-     * @see http://www.quirksmode.org/js/cookies.html
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#Feature-detecting_localStorage
+     * @param type
+     * @returns {boolean|boolean|*}
      */
-    function createCookie(name,value,days,path) {
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime()+(days*24*60*60*1000));
-            var expires = "; expires="+date.toGMTString();
+    function storageAvailable(type) {
+        var storage;
+        try {
+            storage = window[type];
+            var x = '__storage_test__';
+            storage.setItem(x, x);
+            storage.removeItem(x);
+            return true;
         }
-        else var expires = "";
-        document.cookie = name+"="+value+expires+"; path="+path;
+        catch(e) {
+            return e instanceof DOMException && (
+                    // everything except Firefox
+                e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === 'QuotaExceededError' ||
+                // Firefox
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                // acknowledge QuotaExceededError only if there's something already stored
+                (storage && storage.length !== 0);
+        }
     }
 
     /**
-     * Read cookie
-     * @param string name
-     * @returns {*}
-     * @see http://www.quirksmode.org/js/cookies.html
+     * Set localStorage to note user has seen cookie message
+     *
+     * @param expiryDays
      */
-    function readCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    function set(expiryDays = 30) {
+        expiry = Date.now();
+        expiry += (expiryDays * 24 * 60 * 60 * 1000);
+
+        localStorage.setItem(seenStorageKey, 'yes');
+        localStorage.setItem(expiryStorageKey, expiry);
+    }
+
+    /**
+     * Check whether user has seen cookie message via localStorage
+     *
+     * @returns {boolean}
+     */
+    function check() {
+        var seenMessage = localStorage.getItem(seenStorageKey);
+        var expiry = localStorage.getItem(expiryStorageKey);
+
+        if (!seenMessage) {
+            return false;
         }
-        return null;
+
+        if (expiry !== false) {
+            now = Date.now();
+            if (expiry <= now) {
+                clear();
+                return false;
+            }
+        }
+
+        if (seenMessage === 'yes') {
+            return true;
+        }
+
+        return false;
+    }
+
+    function clear() {
+        localStorage.removeItem(seenStorageKey);
+        localStorage.removeItem(expiryStorageKey);
     }
 
     var cookieMessage = document.getElementById('cookie-message');
     if (cookieMessage == null) {
         return;
     }
-    var cookie = readCookie('seen-cookie-message');
-    if (cookie != null && cookie == 'yes') {
-        cookieMessage.style.display = 'none';
-    } else {
-        cookieMessage.style.display = 'block';
+
+    if (storageAvailable('localStorage')) {
+
+        if (check()) {
+            cookieMessage.style.display = 'none';
+
+        } else {
+            cookieMessage.style.display = 'block';
+
+            var expiryDays = cookieMessage.getAttribute('data-cookie-expiry');
+            if (expiryDays == null) {
+                expiryDays = 30;
+            }
+            set(expiryDays);
+        }
     }
-    
-    // Set/update cookie
-    var cookieExpiry = cookieMessage.getAttribute('data-cookie-expiry');
-    if (cookieExpiry == null) {
-        cookieExpiry = 30;
-    }
-    var cookiePath = cookieMessage.getAttribute('data-cookie-path');
-    if (cookiePath == null) {
-        cookiePath = "/";
-    }
-    createCookie('seen-cookie-message','yes',cookieExpiry,cookiePath);
 
 })();
